@@ -22,14 +22,12 @@ public class Knapsack {
 
     public List<Double> getFitness(List<Chromosome> population){
         List<Double> fitness = new ArrayList<Double>();
-
         for(Chromosome c:population){
             double sum = 0;
             for(int i = 0; i < sizes.length; i++){if(c.getBit(i)) sum += sizes[i];}
             if(sum > sizeLimit) fitness.add(maxSize-2*(sum-maxSize));
             else fitness.add(sum);
         }
-        System.out.println("First fitness: " + fitness.get(0));
         return fitness;
     }
 }

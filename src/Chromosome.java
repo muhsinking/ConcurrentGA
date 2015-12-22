@@ -36,9 +36,7 @@ public class Chromosome{
         }
     }
 
-    public boolean getBit(int i){
-        return bits[i];
-    }
+    public boolean getBit(int i){return bits[i];}
 
     public void flipBit(int i){
         if(bits[i]) bits[i] = false;
