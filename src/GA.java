@@ -39,6 +39,10 @@ public class GA {
     private List<Chromosome> fps(List<Chromosome> pop){
         List<Chromosome> newPop = new ArrayList<Chromosome>();
         List<Double> scaledFitness = scaleDouble(fitness);
+        Collections.sort(scaledFitness);
+        System.out.println(scaledFitness);
+        List<Double> ANF = accumulatedNormalizedFitness(scaledFitness);
+        System.out.println(ANF);
         return newPop;
     }
 
@@ -47,19 +51,30 @@ public class GA {
 //        Double maximum = Collections.max(dl);
         Double sum = 0.0;
         List<Double> newList = new ArrayList<Double>(dl.size());
-
         for(Double d : dl){
             sum += d;
         }
-
         for(Double d : dl){
             d /= sum;
             newList.add(d);
         }
-        System.out.println(newList);
 
         sum = 0.0;
+        for(Double d : newList){
+            sum += d;
+        }
+        return newList;
+    }
 
+    private List<Double> accumulatedNormalizedFitness(List<Double> dl){
+        Double sum = 0.0;
+        List<Double> newList = new ArrayList<Double>(dl.size());
+        for(Double d : dl){
+            d += sum;
+            newList.add(d);
+            sum += d;
+        }
+        System.out.println(sum);
         return newList;
     }
 
@@ -76,7 +91,12 @@ public class GA {
         return newPop;
     }
 
-    private void mutate(){
+    private List<Chromosome> mutate(List<Chromosome> pop){
+        List<Chromosome> newPop = new ArrayList<Chromosome>();
+        for(Chromosome c : pop){
+            newPop.add(c.mutate(mutationProb));
+        }
+        return newPop;
     }
 
     public static void main(String[] args){

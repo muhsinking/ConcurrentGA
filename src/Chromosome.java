@@ -43,10 +43,11 @@ public class Chromosome{
         else bits[i] = true;
     }
 
-    public void mutate(double probability){
+    public Chromosome mutate(double probability){
         Random random = new Random();
         for(int i = 0; i < bits.length; i++){
             if(random.nextDouble() < probability) flipBit(i);
         }
+        return this;
     }
 }
