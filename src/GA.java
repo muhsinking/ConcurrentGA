@@ -19,7 +19,7 @@ public class GA {
         population = initPop(populationSize);
         ks = new Knapsack(stringLength, 500, 100);
         population = ks.getFitness(population);
-        printFitness(population);
+//        printFitness(population);
         this.numEpochs = numEpochs;
         this.mutationProb = mutationProb;
     }
@@ -46,18 +46,17 @@ public class GA {
 
     private List<Chromosome> fps(List<Chromosome> pop){
         List<Chromosome> newPop = new ArrayList<Chromosome>();
-        newPop(accumulatedNormalizedFitness(Collections.sort(scaleFitness(pop))));
-//        List<Chromesome> scaledFitness = scaleDouble(fitness);
-//        Collections.sort(scaledFitness, Collections.reverseOrder());
-//        System.out.println(scaledFitness);
-//        List<Double> ANF = accumulatedNormalizedFitness(scaledFitness);
-//        System.out.println(ANF);
+        List<Chromosome> scaledUp = scaleUp(pop);
+        List<Chromosome> scaledFitness = scaleFitness(scaledUp);
+        Collections.sort(scaledFitness, Collections.reverseOrder());
+        printFitness(scaledFitness);
+        List<Chromosome> ANF = accumulatedNormalizedFitness(scaledFitness);
+        printFitness(ANF);
         return newPop;
     }
 
     // scales a list of doubles by the sum of the list
     private List<Chromosome> scaleFitness(List<Chromosome> pop){
-//        Double maximum = Collections.max(dl);
         Double sum = 0.0;
         List<Chromosome> newList = new ArrayList<Chromosome>(pop.size());
         for(Chromosome c : pop){
@@ -73,15 +72,28 @@ public class GA {
         return newList;
     }
 
-    private List<Chromosome> accumulatedNormalizedFitness(List<Chromosome> dl){
-        System.out.println(dl);
-        Double sum = 0.0;
-        List<Double> newList = new ArrayList<Double>(dl.size());
+    private List<Chromosome> scaleUp(List<Chromosome> pop){
+        double minimum = Collections.min(pop).getFitness();
+        List<Chromosome> newList = new ArrayList<Chromosome>(pop.size());
+        for(Chromosome c : pop){
+            double fitness = c.getFitness();
+            c.setFitness(fitness + minimum);
+            newList.add(c);
+        }
+        return newList;
+    }
 
-        for(Double d : dl){
-            d += sum;
-            newList.add(d);
-            sum += d;
+    // adds a running sum of accumulated fitness to each fitness value
+    private List<Chromosome> accumulatedNormalizedFitness(List<Chromosome> pop){
+
+        Double sum = 0.0;
+        List<Chromosome> newList = new ArrayList<Chromosome>(pop.size());
+
+        for(Chromosome c : pop){
+            double fitness = c.getFitness();
+            c.setFitness(fitness + sum);
+            newList.add(c);
+            sum += fitness;
         }
 
         System.out.println(sum);
