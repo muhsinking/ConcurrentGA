@@ -13,10 +13,10 @@ public class GA {
     double mutationProb;
 
     public GA(int populationSize, int stringLength, int numEpochs, double mutationProb){
+        this.stringLength = stringLength;
         population = initPop(populationSize);
         ks = new Knapsack(stringLength);
         fitness = ks.getFitness(population);
-        this.stringLength = stringLength;
         this.numEpochs = numEpochs;
         this.mutationProb = mutationProb;
     }

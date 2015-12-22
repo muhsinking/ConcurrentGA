@@ -9,7 +9,6 @@ public class Chromosome{
 
     public Chromosome(int length){
         bits = initRandom(length);
-        System.out.println(Arrays.toString(bits));
     }
 
     public boolean[] initRandom(int length){
