@@ -20,14 +20,15 @@ public class Knapsack {
         System.out.println("Knapsack sizes: " + Arrays.toString(sizes));
     }
 
-    public List<Double> getFitness(List<Chromosome> population){
-        List<Double> fitness = new ArrayList<Double>();
+    public List<Chromosome> getFitness(List<Chromosome> population){
+        List<Chromosome> newList = new ArrayList<Chromosome>();
         for(Chromosome c:population){
             double sum = 0;
             for(int i = 0; i < sizes.length; i++){if(c.getBit(i)) sum += sizes[i];}
-            if(sum > sizeLimit) fitness.add(maxSize-2*(sum-maxSize));
-            else fitness.add(sum);
+            if(sum > sizeLimit) c.setFitness(maxSize-2*(sum-maxSize));
+            c.setFitness(sum);
+            newList.add(c);
         }
-        return fitness;
+        return newList;
     }
 }
