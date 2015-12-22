@@ -13,8 +13,8 @@ public class GA {
     double mutationProb;
 
     public GA(int populationSize, int stringLength, int numEpochs, double mutationProb){
-        ks = new Knapsack(stringLength);
         population = initPop(populationSize);
+        ks = new Knapsack(stringLength);
         fitness = ks.getFitness(population);
         this.stringLength = stringLength;
         this.numEpochs = numEpochs;
@@ -35,12 +35,11 @@ public class GA {
         return pop;
     }
 
-    private String[] crossover(){
+    private Chromosome[] crossover(){
         return population;
     }
 
-    private String[] mutate(){
-
+    private Chromosome[] mutate(){
         return population;
     }
 

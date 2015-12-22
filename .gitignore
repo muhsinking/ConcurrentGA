@@ -2,3 +2,11 @@
 *.xml
 
 .idea/.name
+
+*.class
+
+*.class
+
+*.class
+
+out/production/MLFinalProject/Knapsack.class
