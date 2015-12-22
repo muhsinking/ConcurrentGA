@@ -59,7 +59,7 @@ public class GA {
     }
 
     public static void main(String[] args){
-        GA ga = new GA(1000, 20, 500, .05);
+        GA ga = new GA(20, 20, 500, .05);
         ga.run();
     }
 

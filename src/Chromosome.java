@@ -22,7 +22,12 @@ public class Chromosome{
     }
 
     public String toString(){
-        return bits.toString();
+        String str = "";
+        for(int i = 0; i < bits.length; i++){
+            if(bits[i]) str += "1";
+            else str += "0";
+        }
+        return str;
     }
 
     public void crossover(Chromosome c, int start, int end){
