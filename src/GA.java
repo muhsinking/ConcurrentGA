@@ -5,7 +5,7 @@ import java.util.Random;
  * Created by muhsinking on 12/21/15.
  */
 public class GA {
-    String[] population;
+    Chromosome[] population;
     double[] fitness;
     Knapsack ks;
     int stringLength;
@@ -27,12 +27,12 @@ public class GA {
         }
     }
 
-    private String[] initPop(int size){
-        Random random = new Random();
+    private Chromosome[] initPop(int size){
+        Chromosome[] pop = new Chromosome[size];
         for(int i = 0; i < size; i++){
-
+            pop[i] = new Chromosome(stringLength);
         }
-        return 0;
+        return pop;
     }
 
     private String[] crossover(){
