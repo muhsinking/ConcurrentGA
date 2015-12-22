@@ -4,11 +4,13 @@ import java.util.Random;
 /**
  * Created by muhsinking on 12/21/15.
  */
-public class Chromosome{
-    boolean[] bits;
+public class Chromosome implements Comparable<Chromosome> {
+    private boolean[] bits;
+    private double fitness;
 
     public Chromosome(int length){
         bits = initRandom(length);
+        fitness = 0.0;
     }
 
     public boolean[] initRandom(int length){
@@ -21,6 +23,7 @@ public class Chromosome{
         return c;
     }
 
+    @Override
     public String toString(){
         String str = "";
         for(int i = 0; i < bits.length; i++){
@@ -29,6 +32,17 @@ public class Chromosome{
         }
         return str;
     }
+
+    @Override
+    public int compareTo(Chromosome c) {
+        if(c.fitness < this.fitness) return 1;
+        else if (c. fitness > this.fitness) return -1;
+        return 0;
+    }
+
+    public void setFitness(double f){fitness = f;}
+
+    public double getFitness(){return fitness;}
 
     public void crossover(Chromosome c, int start, int end){
         for(int i = start; i < end; i++){

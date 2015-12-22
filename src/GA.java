@@ -39,7 +39,7 @@ public class GA {
     private List<Chromosome> fps(List<Chromosome> pop){
         List<Chromosome> newPop = new ArrayList<Chromosome>();
         List<Double> scaledFitness = scaleDouble(fitness);
-        Collections.sort(scaledFitness);
+        Collections.sort(scaledFitness, Collections.reverseOrder());
         System.out.println(scaledFitness);
         List<Double> ANF = accumulatedNormalizedFitness(scaledFitness);
         System.out.println(ANF);
@@ -67,13 +67,16 @@ public class GA {
     }
 
     private List<Double> accumulatedNormalizedFitness(List<Double> dl){
+        System.out.println(dl);
         Double sum = 0.0;
         List<Double> newList = new ArrayList<Double>(dl.size());
+
         for(Double d : dl){
             d += sum;
             newList.add(d);
             sum += d;
         }
+
         System.out.println(sum);
         return newList;
     }
