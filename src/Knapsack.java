@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.*;
 import java.util.Random;
 
 /**
@@ -6,25 +6,32 @@ import java.util.Random;
  */
 public class Knapsack {
     double[] sizes;
+    double sizeLimit;
+    double maxSize;
 
-    public Knapsack(int n){
+    public Knapsack(int n, double sizeLimit, double maxSize){
+        this.sizeLimit = sizeLimit;
+        this.maxSize = maxSize;
         Random random = new Random();
         sizes = new double[n];
         for(int i = 0; i < n; i++){
-            sizes[i] = 100 * random.nextDouble();
+            sizes[i] = maxSize * random.nextDouble();
         }
         System.out.println("Knapsack sizes: " + Arrays.toString(sizes));
     }
 
-    public double[] getFitness(Chromosome[] population){
-        double[] fitness = new double[population.length];
+    public List<Double> getFitness(List<Chromosome> population){
+        List<Double> fitness = new ArrayList<Double>();
 
-        for(int i = 0; i < population.length; i++){
-            int sum = 0;
-            for(int j = 0; j < sizes.length; j++){
-                if(population[i].getBit(j)) sum += sizes[j];
+        for(Chromosome c:population){
+            double sum = 0;
+            for(int i = 0; i < sizes.length; i++){
+                if(c.getBit(i)) sum += sizes[i];
             }
-            fitness[i] = sum;
+            if(sum > sizeLimit){
+                fitness.add(maxSize-(2*(sum-maxSize)));
+            }
+            fitness.add(sum);
         }
         return fitness;
     }
