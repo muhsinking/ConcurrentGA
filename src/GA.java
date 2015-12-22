@@ -24,7 +24,6 @@ public class GA {
     }
 
     public void run(){
-//        System.out.println(population);
         System.out.println(fps(population));
 //        for(int i = 0; i < numEpochs; i++){
 //
@@ -40,21 +39,27 @@ public class GA {
     private List<Chromosome> fps(List<Chromosome> pop){
         List<Chromosome> newPop = new ArrayList<Chromosome>();
         List<Double> scaledFitness = scaleDouble(fitness);
-        System.out.println(scaledFitness);
         return newPop;
     }
 
-    // scales a list of doubles from -1 to 1
+    // scales a list of doubles by the sum of the list
     private List<Double> scaleDouble(List<Double> dl){
-        Double maximum = Collections.max(dl);
-        Double minimum = Collections.min(dl);
-        Double signedRangeInverse = 1/(maximum - minimum);
+//        Double maximum = Collections.max(dl);
+        Double sum = 0.0;
         List<Double> newList = new ArrayList<Double>(dl.size());
 
         for(Double d : dl){
-            d = (d-minimum) * signedRangeInverse * 2 - 1.0;
+            sum += d;
+        }
+
+        for(Double d : dl){
+            d /= sum;
             newList.add(d);
         }
+        System.out.println(newList);
+
+        sum = 0.0;
+
         return newList;
     }
 
