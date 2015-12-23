@@ -47,17 +47,39 @@ public class GA {
 
     private List<Chromosome> fps(List<Chromosome> pop){
         Random random = new Random();
-        List<Chromosome> newPop = new ArrayList<Chromosome>();
+
         List<Chromosome> scaledUp = scaleUp(pop);
         List<Chromosome> scaledFitness = scaleFitness(scaledUp);
         Collections.sort(scaledFitness, Collections.reverseOrder());
         printFitness(scaledFitness);
         List<Chromosome> ANF = accumulatedNormalizedFitness(scaledFitness);
         printFitness(ANF);
-        // binary search anf for next largest value after random value between 0 and 1
-        double d = random.nextDouble();
+
+        List<Chromosome> newPop = new ArrayList<Chromosome>();
+
+        // linear search anf for next largest value after random value between 0 and 1
+        for(int i = 0; i < populationSize/2; i++){
+            double parent1ANF = random.nextDouble();
+            double parent2ANF = random.nextDouble();
+            Chromosome parent1 = searchANF(ANF,parent1ANF);
+            Chromosome parent2 = searchANF(ANF,parent2ANF);
+
+//            int crossover = random.nextInt()
+
+//            Chromosome child1 = paren
+
+        }
 
         return newPop;
+    }
+
+    private Chromosome searchANF (List<Chromosome> ANFList, double ANFTarget){
+        for(int i = 0; i < ANFList.size(); i ++){
+            Chromosome c = ANFList.get(i);
+            if(c.getFitness() <= ANFTarget)
+                return c;
+        }
+        return ANFList.get(ANFList.size()-1);
     }
 
     // scales a list of doubles by the sum of the list
