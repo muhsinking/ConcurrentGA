@@ -10,16 +10,17 @@ public class GA {
     List<Chromosome> population;
 //    List<Double> fitness;
     Knapsack ks;
+    int populationSize;
     int stringLength;
     int numEpochs;
     double mutationProb;
 
     public GA(int populationSize, int stringLength, int numEpochs, double mutationProb){
         this.stringLength = stringLength;
+        this.populationSize = populationSize;
         population = initPop(populationSize);
         ks = new Knapsack(stringLength, 500, 100);
         population = ks.getFitness(population);
-//        printFitness(population);
         this.numEpochs = numEpochs;
         this.mutationProb = mutationProb;
     }
@@ -45,6 +46,7 @@ public class GA {
     }
 
     private List<Chromosome> fps(List<Chromosome> pop){
+        Random random = new Random();
         List<Chromosome> newPop = new ArrayList<Chromosome>();
         List<Chromosome> scaledUp = scaleUp(pop);
         List<Chromosome> scaledFitness = scaleFitness(scaledUp);
@@ -52,6 +54,9 @@ public class GA {
         printFitness(scaledFitness);
         List<Chromosome> ANF = accumulatedNormalizedFitness(scaledFitness);
         printFitness(ANF);
+        // binary search anf for next largest value after random value between 0 and 1
+        double d = random.nextDouble();
+
         return newPop;
     }
 
