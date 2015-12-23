@@ -32,11 +32,17 @@ public class GA {
         }
     }
 
+    public void printPopulaion(List<Chromosome> lc){
+        System.out.println("");
+        for(Chromosome c : lc){
+            System.out.print(c + " ");
+        }
+    }
+
     public void run(){
-        System.out.println(fps(population));
-//        for(int i = 0; i < numEpochs; i++){
-//
-//        }
+        for(int i = 0; i < 1; i++){
+            population = (fps(population));
+        }
     }
 
     private List<Chromosome> initPop(int size){
@@ -51,23 +57,41 @@ public class GA {
         List<Chromosome> scaledUp = scaleUp(pop);
         List<Chromosome> scaledFitness = scaleFitness(scaledUp);
         Collections.sort(scaledFitness, Collections.reverseOrder());
-        printFitness(scaledFitness);
         List<Chromosome> ANF = accumulatedNormalizedFitness(scaledFitness);
+        printPopulaion(ANF);
         printFitness(ANF);
 
         List<Chromosome> newPop = new ArrayList<Chromosome>();
 
         // linear search anf for next largest value after random value between 0 and 1
         for(int i = 0; i < populationSize/2; i++){
+            System.out.println("");
+
             double parent1ANF = random.nextDouble();
             double parent2ANF = random.nextDouble();
             Chromosome parent1 = searchANF(ANF,parent1ANF);
             Chromosome parent2 = searchANF(ANF,parent2ANF);
 
-//            int crossover = random.nextInt()
+            System.out.println(parent1);
+            System.out.println(parent2);
 
-//            Chromosome child1 = paren
+            int crossoverPoint = random.nextInt((stringLength-1) + 1);
 
+            System.out.println(crossoverPoint);
+
+            Chromosome temp = parent1;
+
+            Chromosome child1 = parent1.crossover(parent2,0,crossoverPoint);
+            Chromosome child2 = parent2.crossover(temp,crossoverPoint,stringLength-1);
+
+            System.out.println(child1);
+            System.out.println(child2);
+
+            child1 = child1.mutate(mutationProb);
+            child2 = child2.mutate(mutationProb);
+
+            newPop.add(child1);
+            newPop.add(child2);
         }
 
         return newPop;
@@ -76,8 +100,9 @@ public class GA {
     private Chromosome searchANF (List<Chromosome> ANFList, double ANFTarget){
         for(int i = 0; i < ANFList.size(); i ++){
             Chromosome c = ANFList.get(i);
-            if(c.getFitness() <= ANFTarget)
+            if(c.getFitness() > ANFTarget){
                 return c;
+            }
         }
         return ANFList.get(ANFList.size()-1);
     }
@@ -121,9 +146,9 @@ public class GA {
             c.setFitness(fitness + sum);
             newList.add(c);
             sum += fitness;
+
         }
 
-        System.out.println(sum);
         return newList;
     }
 

@@ -13,6 +13,12 @@ public class Chromosome implements Comparable<Chromosome> {
         fitness = 0.0;
     }
 
+    // nonrandom initialization
+    public Chromosome(boolean[] bits, double fitness){
+        this.bits = bits;
+        this.fitness = fitness;
+    }
+
     public boolean[] initRandom(int length){
         Random random = new Random();
         boolean[] c = new boolean[length];
@@ -44,10 +50,12 @@ public class Chromosome implements Comparable<Chromosome> {
 
     public double getFitness(){return fitness;}
 
-    public void crossover(Chromosome c, int start, int end){
+    public Chromosome crossover(Chromosome c, int start, int end){
+        Chromosome child = new Chromosome(bits,fitness)
         for(int i = start; i < end; i++){
             bits[i] = c.getBit(i);
         }
+        return this;
     }
 
     public boolean getBit(int i){return bits[i];}

@@ -27,7 +27,6 @@ public class Knapsack {
             for(int i = 0; i < sizes.length; i++){if(c.getBit(i)) sum += sizes[i];}
             if(sum > sizeLimit) c.setFitness(maxSize-2*(sum-maxSize));
             else c.setFitness(sum);
-            System.out.println(c.getFitness());
             newList.add(c);
         }
         return newList;
