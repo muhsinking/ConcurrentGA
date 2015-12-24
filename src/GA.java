@@ -56,12 +56,9 @@ public class GA {
     private List<Chromosome> fps(List<Chromosome> pop){
         Random random = new Random();
 
-//        List<Chromosome> scaledUp = scaleUp(pop);
         List<Chromosome> scaledFitness = scaleFitness(pop);
         Collections.sort(scaledFitness, Collections.reverseOrder());
         List<Chromosome> ANF = accumulatedNormalizedFitness(scaledFitness);
-//        printPopulaion(ANF);
-//        printFitness(ANF);
 
         List<Chromosome> newPop = new ArrayList<Chromosome>();
 
@@ -83,7 +80,6 @@ public class GA {
             newPop.add(child1);
             newPop.add(child2);
         }
-
         return newPop;
     }
 
@@ -106,7 +102,9 @@ public class GA {
     private Chromosome searchANF (List<Chromosome> ANFList, double ANFTarget){
         for(int i = 0; i < ANFList.size(); i ++){
             Chromosome c = ANFList.get(i);
-            if(c.getFitness() > ANFTarget){return c;}
+            if(c.getFitness() > ANFTarget){
+                return c;
+            }
         }
         return ANFList.get(ANFList.size()-1);
     }
@@ -157,7 +155,7 @@ public class GA {
     }
 
     public static void main(String[] args){
-        GA ga = new GA(1000, 20, 200, .05);
+        GA ga = new GA(100, 20, 1000, .001);
         ga.run();
     }
 }

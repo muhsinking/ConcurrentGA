@@ -51,14 +51,6 @@ public class Chromosome implements Comparable<Chromosome> {
 
     public double getFitness(){return fitness;}
 
-    public Chromosome crossover(Chromosome c, int start, int end){
-        Chromosome child = new Chromosome(this.bits);
-        for(int i = start; i < end; i++){
-            child.setBit(i,c.getBit(i));
-        }
-        return child;
-    }
-
     public void setBit(int i, boolean s){
         bits[i] = s;
     }
