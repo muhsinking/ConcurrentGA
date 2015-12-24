@@ -63,7 +63,7 @@ public class Chromosome implements Comparable<Chromosome> {
         if(bits[i]) bits[i] = false;
         else bits[i] = true;
     }
-    
+
     public Chromosome mutate(double probability){
         Random random = new Random();
         for(int i = 0; i < bits.length; i++){
