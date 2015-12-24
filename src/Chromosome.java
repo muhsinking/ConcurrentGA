@@ -52,7 +52,7 @@ public class Chromosome implements Comparable<Chromosome> {
     public double getFitness(){return fitness;}
 
     public Chromosome crossover(Chromosome c, int start, int end){
-        Chromosome child = new Chromosome(bits);
+        Chromosome child = new Chromosome(this.bits);
         for(int i = start; i < end; i++){
             child.setBit(i,c.getBit(i));
         }
@@ -73,7 +73,9 @@ public class Chromosome implements Comparable<Chromosome> {
     public Chromosome mutate(double probability){
         Random random = new Random();
         for(int i = 0; i < bits.length; i++){
-            if(random.nextDouble() < probability) flipBit(i);
+            if(random.nextDouble() < probability) {
+                flipBit(i);
+            }
         }
         return this;
     }

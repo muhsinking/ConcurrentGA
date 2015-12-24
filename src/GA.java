@@ -19,7 +19,7 @@ public class GA {
         this.stringLength = stringLength;
         this.populationSize = populationSize;
         population = initPop(populationSize);
-        ks = new Knapsack(stringLength, 500, 100);
+        ks = new Knapsack(stringLength, 500, 200);
         population = ks.getFitness(population);
         this.numEpochs = numEpochs;
         this.mutationProb = mutationProb;
@@ -40,8 +40,10 @@ public class GA {
     }
 
     public void run(){
-        for(int i = 0; i < 1; i++){
+        for(int i = 0; i < numEpochs; i++){
             population = (fps(population));
+            population = ks.getFitness(population);
+            System.out.println(Collections.max(population).getFitness());
         }
     }
 
@@ -58,32 +60,22 @@ public class GA {
         List<Chromosome> scaledFitness = scaleFitness(scaledUp);
         Collections.sort(scaledFitness, Collections.reverseOrder());
         List<Chromosome> ANF = accumulatedNormalizedFitness(scaledFitness);
-        printPopulaion(ANF);
-        printFitness(ANF);
+//        printPopulaion(ANF);
+//        printFitness(ANF);
 
         List<Chromosome> newPop = new ArrayList<Chromosome>();
 
         // linear search anf for next largest value after random value between 0 and 1
         for(int i = 0; i < populationSize/2; i++){
-            System.out.println("");
-
             double parent1ANF = random.nextDouble();
             double parent2ANF = random.nextDouble();
             Chromosome parent1 = searchANF(ANF,parent1ANF);
             Chromosome parent2 = searchANF(ANF,parent2ANF);
 
-            System.out.println(parent1);
-            System.out.println(parent2);
+            int crossoverPoint = random.nextInt((stringLength) + 1);
 
-            int crossoverPoint = random.nextInt((stringLength-1) + 1);
-
-            System.out.println(crossoverPoint);
-
-            Chromosome child1 = parent1.crossover(parent2,0,crossoverPoint);
-            Chromosome child2 = parent2.crossover(parent1,crossoverPoint,stringLength-1);
-
-            System.out.println(child1);
-            System.out.println(child2);
+            Chromosome child1 = crossover(parent1, parent2, crossoverPoint);
+            Chromosome child2 = crossover(parent2, parent1, crossoverPoint);
 
             child1 = child1.mutate(mutationProb);
             child2 = child2.mutate(mutationProb);
@@ -93,6 +85,22 @@ public class GA {
         }
 
         return newPop;
+    }
+
+    private Chromosome crossover (Chromosome parent1, Chromosome parent2, int crossoverPoint){
+        boolean[] bits = new boolean[stringLength];
+
+        for(int i = 0; i < crossoverPoint; i++){
+            if(parent1.getBit(i)) bits[i] = true;
+            else bits[i] = false;
+        }
+
+        for(int i = crossoverPoint; i < stringLength; i++){
+            if(parent2.getBit(i)) bits[i] = true;
+            else bits[i] = false;
+        }
+
+        return new Chromosome(bits);
     }
 
     private Chromosome searchANF (List<Chromosome> ANFList, double ANFTarget){
@@ -151,7 +159,7 @@ public class GA {
     }
 
     public static void main(String[] args){
-        GA ga = new GA(20, 20, 500, .05);
+        GA ga = new GA(1000, 20, 200, .05);
         ga.run();
     }
 }
