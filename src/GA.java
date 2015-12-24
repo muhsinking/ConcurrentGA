@@ -56,8 +56,8 @@ public class GA {
     private List<Chromosome> fps(List<Chromosome> pop){
         Random random = new Random();
 
-        List<Chromosome> scaledUp = scaleUp(pop);
-        List<Chromosome> scaledFitness = scaleFitness(scaledUp);
+//        List<Chromosome> scaledUp = scaleUp(pop);
+        List<Chromosome> scaledFitness = scaleFitness(pop);
         Collections.sort(scaledFitness, Collections.reverseOrder());
         List<Chromosome> ANF = accumulatedNormalizedFitness(scaledFitness);
 //        printPopulaion(ANF);
