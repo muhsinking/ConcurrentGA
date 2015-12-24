@@ -8,7 +8,6 @@ import java.util.Random;
  */
 public class GA {
     List<Chromosome> population;
-//    List<Double> fitness;
     Knapsack ks;
     int populationSize;
     int stringLength;
@@ -40,11 +39,15 @@ public class GA {
     }
 
     public void run(){
+        float start = System.nanoTime();
         for(int i = 0; i < numEpochs; i++){
             population = (fps(population));
             population = ks.getFitness(population);
-            System.out.println(Collections.max(population).getFitness());
+//            System.out.println(Collections.max(population).getFitness());
         }
+        float end = System.nanoTime();
+        float total = end-start;
+        System.out.println(total/1000000 + " miliseconds");
     }
 
     private List<Chromosome> initPop(int size){
@@ -53,6 +56,7 @@ public class GA {
         return pop;
     }
 
+    // performs roulette wheel selection, also known as fitness proportional selection
     private List<Chromosome> fps(List<Chromosome> pop){
         Random random = new Random();
 
@@ -62,10 +66,10 @@ public class GA {
 
         List<Chromosome> newPop = new ArrayList<Chromosome>();
 
-        // linear search anf for next largest value after random value between 0 and 1
         for(int i = 0; i < populationSize/2; i++){
             double parent1ANF = random.nextDouble();
             double parent2ANF = random.nextDouble();
+
             Chromosome parent1 = searchANF(ANF,parent1ANF);
             Chromosome parent2 = searchANF(ANF,parent2ANF);
 
@@ -83,6 +87,7 @@ public class GA {
         return newPop;
     }
 
+    // computes the crossover between two chromosomes
     private Chromosome crossover (Chromosome parent1, Chromosome parent2, int crossoverPoint){
         boolean[] bits = new boolean[stringLength];
 
@@ -99,6 +104,7 @@ public class GA {
         return new Chromosome(bits);
     }
 
+    // linearly searches the accumulated normalized fitnesses for the first value greater than the target
     private Chromosome searchANF (List<Chromosome> ANFList, double ANFTarget){
         for(int i = 0; i < ANFList.size(); i ++){
             Chromosome c = ANFList.get(i);
@@ -125,18 +131,6 @@ public class GA {
         return newList;
     }
 
-    // scale up to remove negative values
-    private List<Chromosome> scaleUp(List<Chromosome> pop){
-        double minimum = Collections.min(pop).getFitness();
-        List<Chromosome> newList = new ArrayList<Chromosome>(pop.size());
-        for(Chromosome c : pop){
-            double fitness = c.getFitness();
-            c.setFitness(fitness + minimum);
-            newList.add(c);
-        }
-        return newList;
-    }
-
     // adds a running sum of accumulated fitness to each scaled fitness value
     private List<Chromosome> accumulatedNormalizedFitness(List<Chromosome> pop){
 
@@ -150,12 +144,11 @@ public class GA {
             sum += fitness;
 
         }
-
         return newList;
     }
 
     public static void main(String[] args){
-        GA ga = new GA(100, 20, 1000, .001);
+        GA ga = new GA(1000, 20, 1000, .001);
         ga.run();
     }
 }

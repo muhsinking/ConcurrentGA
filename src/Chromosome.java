@@ -20,6 +20,7 @@ public class Chromosome implements Comparable<Chromosome> {
         fitness = 0.0;
     }
 
+    // random initialization
     public boolean[] initRandom(int length){
         Random random = new Random();
         boolean[] c = new boolean[length];
@@ -40,6 +41,7 @@ public class Chromosome implements Comparable<Chromosome> {
         return str;
     }
 
+    // used for sorting chromosome list by fitness values
     @Override
     public int compareTo(Chromosome c) {
         if(c.fitness < this.fitness) return 1;
@@ -61,7 +63,7 @@ public class Chromosome implements Comparable<Chromosome> {
         if(bits[i]) bits[i] = false;
         else bits[i] = true;
     }
-
+    
     public Chromosome mutate(double probability){
         Random random = new Random();
         for(int i = 0; i < bits.length; i++){
