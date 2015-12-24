@@ -22,11 +22,18 @@ public class Knapsack {
 
     public List<Chromosome> getFitness(List<Chromosome> population){
         List<Chromosome> newList = new ArrayList<Chromosome>();
+        Random random = new Random();
         for(Chromosome c:population){
             double sum = 0;
             for(int i = 0; i < sizes.length; i++){if(c.getBit(i)) sum += sizes[i];}
-            if(sum > sizeLimit) c.setFitness(maxSize-2*(sum-maxSize));
-            else c.setFitness(sum);
+            while(sum > sizeLimit){
+                int clear = random.nextInt(sizes.length);
+                if (c.getBit(clear)){
+                    sum -= sizes[clear];
+                    c.setBit(clear,false);
+                }
+            }
+            c.setFitness(sum);
             newList.add(c);
         }
         return newList;

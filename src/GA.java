@@ -106,14 +106,12 @@ public class GA {
     private Chromosome searchANF (List<Chromosome> ANFList, double ANFTarget){
         for(int i = 0; i < ANFList.size(); i ++){
             Chromosome c = ANFList.get(i);
-            if(c.getFitness() > ANFTarget){
-                return c;
-            }
+            if(c.getFitness() > ANFTarget){return c;}
         }
         return ANFList.get(ANFList.size()-1);
     }
 
-    // scales a list of doubles by the sum of the list
+    // scales fitness levels such that all sum to 1
     private List<Chromosome> scaleFitness(List<Chromosome> pop){
         Double sum = 0.0;
         List<Chromosome> newList = new ArrayList<Chromosome>(pop.size());
@@ -126,10 +124,10 @@ public class GA {
             c.setFitness(fitness);
             newList.add(c);
         }
-
         return newList;
     }
 
+    // scale up to remove negative values
     private List<Chromosome> scaleUp(List<Chromosome> pop){
         double minimum = Collections.min(pop).getFitness();
         List<Chromosome> newList = new ArrayList<Chromosome>(pop.size());
@@ -141,7 +139,7 @@ public class GA {
         return newList;
     }
 
-    // adds a running sum of accumulated fitness to each fitness value
+    // adds a running sum of accumulated fitness to each scaled fitness value
     private List<Chromosome> accumulatedNormalizedFitness(List<Chromosome> pop){
 
         Double sum = 0.0;
