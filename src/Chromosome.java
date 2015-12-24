@@ -14,9 +14,10 @@ public class Chromosome implements Comparable<Chromosome> {
     }
 
     // nonrandom initialization
-    public Chromosome(boolean[] bits, double fitness){
-        this.bits = bits;
-        this.fitness = fitness;
+    public Chromosome(boolean[] bits){
+        this.bits = new boolean[bits.length];
+        System.arraycopy(bits, 0, this.bits, 0, bits.length );
+        fitness = 0.0;
     }
 
     public boolean[] initRandom(int length){
@@ -51,11 +52,15 @@ public class Chromosome implements Comparable<Chromosome> {
     public double getFitness(){return fitness;}
 
     public Chromosome crossover(Chromosome c, int start, int end){
-        Chromosome child = new Chromosome(bits,fitness)
+        Chromosome child = new Chromosome(bits);
         for(int i = start; i < end; i++){
-            bits[i] = c.getBit(i);
+            child.setBit(i,c.getBit(i));
         }
-        return this;
+        return child;
+    }
+
+    public void setBit(int i, boolean s){
+        bits[i] = s;
     }
 
     public boolean getBit(int i){return bits[i];}

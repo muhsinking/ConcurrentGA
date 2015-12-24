@@ -79,10 +79,8 @@ public class GA {
 
             System.out.println(crossoverPoint);
 
-            Chromosome temp = parent1;
-
             Chromosome child1 = parent1.crossover(parent2,0,crossoverPoint);
-            Chromosome child2 = parent2.crossover(temp,crossoverPoint,stringLength-1);
+            Chromosome child2 = parent2.crossover(parent1,crossoverPoint,stringLength-1);
 
             System.out.println(child1);
             System.out.println(child2);
@@ -150,27 +148,6 @@ public class GA {
         }
 
         return newList;
-    }
-
-    private List<Chromosome> crossover(List<Chromosome> pop){
-        Random random = new Random();
-        List<Chromosome> newPop = new ArrayList<Chromosome>();
-        Chromosome last = pop.get(pop.size()-1);
-
-        for(Chromosome c : pop){
-            int crossoverPoint = (int)(Math.random() * ((stringLength - 1) + 1));
-            c.crossover(last,crossoverPoint,stringLength);
-        }
-
-        return newPop;
-    }
-
-    private List<Chromosome> mutate(List<Chromosome> pop){
-        List<Chromosome> newPop = new ArrayList<Chromosome>();
-        for(Chromosome c : pop){
-            newPop.add(c.mutate(mutationProb));
-        }
-        return newPop;
     }
 
     public static void main(String[] args){
