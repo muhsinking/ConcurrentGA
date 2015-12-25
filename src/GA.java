@@ -53,10 +53,10 @@ public class GA {
             else convergenceCount = 0;
 //            System.out.println(newMax);
 
-//            if(convergenceCount >= 20) {
-//                System.out.println("converged");
-//                break;
-//            }
+            if(convergenceCount >= 20) {
+                System.out.println("converged");
+                break;
+            }
             max = newMax;
 
             population = newPop;
