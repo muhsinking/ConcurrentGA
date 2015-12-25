@@ -52,38 +52,34 @@ public class ConcurrentGA implements Runnable{
     }
 
     public void run(){
-
         System.out.println("Running " +  threadName );
-        try {
-            int convergenceCount = 0;
-            double max = 0;
 
-            float start = System.nanoTime();
+        int convergenceCount = 0;
+        double max = 0;
 
-            for(int i = 0; i < numEpochs; i++){
-                List<Chromosome> newPop = new ArrayList<Chromosome>(population);
-                newPop = fps(newPop);
-                newPop = ks.getFitness(newPop);
-                double newMax = Collections.max(newPop).getFitness();
-                if(Math.abs(newMax-max) <= .000001) convergenceCount ++;
-                else convergenceCount = 0;
-                System.out.println(newMax);
+        float start = System.nanoTime();
 
-                if(convergenceCount >= 20) {
-                    System.out.println("converged");
-                    break;
-                }
-                max = newMax;
+        for(int i = 0; i < numEpochs; i++){
+            List<Chromosome> newPop = new ArrayList<Chromosome>(population);
+            newPop = fps(newPop);
+            newPop = ks.getFitness(newPop);
+            double newMax = Collections.max(newPop).getFitness();
+            if(Math.abs(newMax-max) <= .000001) convergenceCount ++;
+            else convergenceCount = 0;
 
-                population = newPop;
-                Thread.sleep(5);
+            if(convergenceCount >= 20) {
+                System.out.println("converged");
+                break;
             }
-            float end = System.nanoTime();
-            float total = end-start;
-            System.out.println(total/1000000 + " miliseconds");
-        } catch (InterruptedException e) {
-            System.out.println("Thread " +  threadName + " interrupted.");
+            max = newMax;
+
+            population = newPop;
         }
+        float end = System.nanoTime();
+        float total = end-start;
+
+        System.out.println(total/1000000 + " miliseconds");
+
         System.out.println("Thread " +  threadName + " exiting.");
     }
 
@@ -121,6 +117,9 @@ public class ConcurrentGA implements Runnable{
             newPop.add(child1);
             newPop.add(child2);
         }
+
+        Collections.shuffle(newPop);
+
         return newPop;
     }
 

@@ -38,7 +38,7 @@ public class GA {
         }
     }
 
-    public void run(){
+    public double run(){
         int convergenceCount = 0;
         double max = 0;
 
@@ -51,19 +51,19 @@ public class GA {
             double newMax = Collections.max(newPop).getFitness();
             if(Math.abs(newMax-max) <= .000001) convergenceCount ++;
             else convergenceCount = 0;
-            System.out.println(newMax);
+//            System.out.println(newMax);
 
-            if(convergenceCount >= 20) {
-                System.out.println("converged");
-                break;
-            }
+//            if(convergenceCount >= 20) {
+//                System.out.println("converged");
+//                break;
+//            }
             max = newMax;
 
             population = newPop;
         }
         float end = System.nanoTime();
         float total = end-start;
-        System.out.println(total/1000000 + " miliseconds");
+        return total;
     }
 
     private List<Chromosome> initPop(int size){
@@ -100,6 +100,9 @@ public class GA {
             newPop.add(child1);
             newPop.add(child2);
         }
+
+        Collections.shuffle(newPop);
+
         return newPop;
     }
 
@@ -164,7 +167,15 @@ public class GA {
     }
 
     public static void main(String[] args){
-        GA ga = new GA(1000, 20, 500, .001);
-        ga.run();
+        double sum = 0;
+        for(int i = 0; i < 100; i++){
+            GA ga = new GA(1000, 20, 1000, .001);
+            sum += ga.run();
+        }
+
+        double avg = sum/100;
+
+        System.out.println(avg/1000000 + " miliseconds");
+
     }
 }

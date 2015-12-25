@@ -14,10 +14,11 @@ public class Knapsack {
         this.maxSize = maxSize;
         Random random = new Random();
         sizes = new double[n];
+//        use below for randomized initialization of values:
 //        for(int i = 0; i < n; i++){
 //            sizes[i] = maxSize * random.nextDouble();
 //        }
-        sizes = new double[] {109.60, 125.48, 52.16, 195.55, 58.67, 61.87, 92.95, 93.14, 155.05, 110.89, 13.34, 132.49, 194.03, 121.29, 179.33, 139.02, 198.78, 192.57, 81.66, 128.90};
+        sizes = new double[] {125.59,  58.67, 61.87, 92.95, 93.14, 109.60, 155.05, 110.89,52.16, 195.55, 13.34, 132.49, 194.03, 121.29, 179.33, 139.02, 198.78, 192.57, 81.66, 128.90};
         System.out.println("Knapsack sizes: " + Arrays.toString(sizes));
     }
 
