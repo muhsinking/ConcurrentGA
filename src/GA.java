@@ -48,7 +48,6 @@ public class GA {
             double newMax = Collections.max(newPop).getFitness();
             if(Math.abs(newMax-max) <= .000001) convergenceCount ++;
             else convergenceCount = 0;
-//            System.out.println(newMax);
 
             if(convergenceCount >= 20) {
                 System.out.println("converged");
