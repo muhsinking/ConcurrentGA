@@ -1,9 +1,6 @@
 import java.util.*;
 import java.util.Random;
 
-/**
- * Created by muhsinking on 12/21/15.
- */
 public class Knapsack {
     double[] sizes;
     double sizeLimit;
@@ -18,7 +15,7 @@ public class Knapsack {
 //        for(int i = 0; i < n; i++){
 //            sizes[i] = maxSize * random.nextDouble();
 //        }
-        sizes = new double[] {169.90, 155.05, 122.19, 179.33, 102.33, 197.77, 192.57, 86.16, 92.95, 93.14, 195.55, 13.34, 125.59, 58.67, 61.87, 132.49, 189.10,52.16, 194.03, 128.90};
+        sizes = new double[] {169.90, 155.05, 122.19, 173.93, 92.95, 93.14, 195.55, 13.34, 125.59, 58.67, 61.87, 132.49, 102.33, 197.77, 192.57, 86.16, 189.10,52.16, 194.03, 128.90};
         System.out.println("Knapsack sizes: " + Arrays.toString(sizes));
     }
 

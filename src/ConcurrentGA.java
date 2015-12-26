@@ -3,9 +3,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by muhsinking on 12/24/15.
- */
 public class ConcurrentGA implements Runnable{
     private Thread t;
     private String threadName;

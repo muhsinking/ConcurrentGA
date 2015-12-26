@@ -1,9 +1,6 @@
 import java.util.Arrays;
 import java.util.Random;
 
-/**
- * Created by muhsinking on 12/21/15.
- */
 public class Chromosome implements Comparable<Chromosome> {
     private boolean[] bits;
     private double fitness;

@@ -3,9 +3,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by muhsinking on 12/21/15.
- */
 public class GA {
     List<Chromosome> population;
     Knapsack ks;
